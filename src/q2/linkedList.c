@@ -59,3 +59,64 @@ void deleteAfter(listElement* after){
   free(delete->data);
   free(delete);
 }
+
+int length(listElement* list) {
+	if (!list) return 0;
+	listElement* next = list;
+	int i = 0;
+	do {
+		next = next->next;
+		i++;
+	} while (next != NULL);
+	return i;
+}
+
+void push(listElement** list, char* data, size_t size) {
+	listElement* head = createEl(data, size);
+	head->next = *list;
+	*list = head;
+	//Looks like memcpy was not needed after all
+}
+listElement* pop(listElement** list) {
+	listElement* temp = *list;
+	*list = temp->next;
+	temp->next = NULL;
+	return temp;
+}
+void enqueue(listElement** list, char* data, size_t size) {
+	listElement* head = createEl(data, size);
+	head->next = *list;
+	*list = head;
+	//Enqueue is the same as push when used on the same data structure.
+}
+listElement* dequeue(listElement* list) {
+	if (!list) return NULL;
+	listElement* secondLast = list;
+	listElement* last = list->next;
+	if (!last) {
+		return secondLast;
+		//See below for an implementation that can reduce a list to 0, using side effects on a double pointer.
+	}
+	while (!!last->next) {
+		secondLast = last;
+		last = last->next;
+	}
+	secondLast->next = NULL;
+	return last;
+}
+
+/*listElement* dequeue(listElement** list) {
+	if (!list) return NULL;
+	listElement* secondLast = *list;
+	listElement* last = (*list)->next;
+	if (!last) {
+		*list = NULL;
+		return secondLast;
+	}
+	while (!!last->next) {
+		secondLast = last;
+		last = last->next;
+	}
+	secondLast->next = NULL;
+	return last;
+}*/

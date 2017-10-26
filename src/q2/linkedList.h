@@ -17,5 +17,12 @@ listElement* insertAfter(listElement* after, char* data, size_t size);
 //Delete the element after the given el
 void deleteAfter(listElement* after);
 
+int length(listElement* list);
+void push(listElement** list, char* data, size_t size);
+listElement* pop(listElement** list);
+void enqueue(listElement** list, char* data, size_t size);
+listElement* dequeue(listElement* list);
+/*listElement* dequeue(listElement** list);*/
+//Double pointer implementation that can reduce a list to 0.
 
 #endif
